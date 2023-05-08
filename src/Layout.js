@@ -17,7 +17,7 @@ const Layout = () => {
                     <label className="pl-3">Shopping</label>
                 </div>
                 <div className="cursor-pointer text-xl text-gray-600" onClick={() => { navigate('/basket') }}>
-                  <FontAwesomeIcon icon={faCartShopping}/><label className="pl-1">({transactions.length})</label>
+                  <FontAwesomeIcon icon={faCartShopping}/><label className="pl-1 cursor-pointer">({transactions.length})</label>
                 </div>
             </div>
         </nav>
