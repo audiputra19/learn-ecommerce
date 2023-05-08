@@ -2,11 +2,28 @@ import { useDispatch, useSelector } from "react-redux"
 import { deductionTransactionData, delTransactionData, plusTransactionData } from "./redux/product/product.action";
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import { faCircleMinus, faCirclePlus, faTrashCan } from '@fortawesome/free-solid-svg-icons'
+import { useEffect, useState } from "react";
 
 const Basket = () => {
     
     const dispatch = useDispatch();
     const { transactions } = useSelector(state => state.product);
+    const [totalPrice, setTotalPrice] = useState(0);
+    const [totalDiscount, setTotalDiscount] = useState(0);
+
+    useEffect(() => {
+        const prevPrice = 0;
+        const prevDiscount = 0;
+        transactions.forEach(item => {
+            const price = item.price * item.qty;
+            const disc = (item.price * (item.disc/100)) * item.qty;
+            const total = price - disc;
+            prevPrice += total;
+            prevDiscount += disc;
+        });
+        setTotalPrice(prevPrice);
+        setTotalDiscount(prevDiscount)
+    }, [transactions]);
 
     const transaction = (item, i) => {
         const price = item.price * item.qty;
@@ -53,11 +70,11 @@ const Basket = () => {
                         <label className="font-bold text-lg text-black-700">Detail Belanja</label>
                         <div className="flex justify-between mt-2">
                             <label className="text-gray-600">Total Harga</label>
-                            <label className="text-gray-600">Rp. {}</label>
+                            <label className="text-gray-600">Rp. {totalPrice}</label>
                         </div>
                         <div className="flex justify-between">
                             <label className="text-gray-600">Total Diskon</label>
-                            <label className="text-gray-600">Rp. {}</label>
+                            <label className="text-gray-600">Rp. {totalDiscount}</label>
                         </div>
                     </div>
                     <hr className="border-gray-150 pb-5"/>
