@@ -3,6 +3,7 @@ import Layout from "./Layout";
 import Homepage from "./Homepage";
 import Detail from "./details";
 import Basket from "./Basket";
+import History from "./History";
 
 
 const Nav = () => {
@@ -22,6 +23,10 @@ const Nav = () => {
                 {
                     path: "/basket",
                     element: <Basket/>
+                },
+                {
+                    path: "/history",
+                    element: <History/>
                 }
             ]
         }

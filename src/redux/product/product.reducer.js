@@ -2,6 +2,7 @@ import ProductTypes from "./product.type";
 
 const INITIAL_STATE = {
     transactions: [],
+    Histransactions: []
 };
 
 const ProductReducer = (state = INITIAL_STATE, action) => {
@@ -21,6 +22,13 @@ const ProductReducer = (state = INITIAL_STATE, action) => {
                 ...state,
                 transactions: newTransaction,
             }
+        case ProductTypes.HISTORY_TRANSACTION:
+            const newTransactionHis = [...state.Histransactions, ...action.payload];
+            return {
+                ...state,
+                Histransactions: newTransactionHis,
+            }
+         
         case ProductTypes.DEDUCTION_TRANSACTION:
             let prevProductDeduction = [...state.transactions];
             //console.log("data state",state.transactions);

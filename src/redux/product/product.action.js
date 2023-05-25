@@ -13,6 +13,19 @@ export const saveTransactionData = (dataTransaction) => {
     }
 }
 
+export const historyTransaction = (dataTransaction) => {
+    return async (dispatch) => {
+        try {
+            dispatch({
+                type: ProductTypes.HISTORY_TRANSACTION,
+                payload: dataTransaction
+            })
+        } catch (error) {
+            console.log(error)
+        }
+    }
+}
+
 export const deductionTransactionData = (id) => {
     return async (dispatch) => {
         try {
