@@ -23,7 +23,7 @@ const ProductReducer = (state = INITIAL_STATE, action) => {
                 transactions: newTransaction,
             }
         case ProductTypes.HISTORY_TRANSACTION:
-            const newTransactionHis = [...state.Histransactions, ...action.payload];
+            const newTransactionHis = [...state.Histransactions, action.payload];
             return {
                 ...state,
                 Histransactions: newTransactionHis,

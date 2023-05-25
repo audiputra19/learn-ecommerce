@@ -8,12 +8,40 @@ const History = () => {
     const params = useParams();
     const [Prod, setProd] = useState([]);
     const [date, setDate] = useState();
-    const {Histransactions} = useSelector(state => state.product);
+    const { Histransactions } = useSelector(state => state.product);
 
     useEffect(() => {
-        const selectedTransaction = Histransactions.map(item => ({...item.data}));
-        setProd(selectedTransaction);
-    },[params.data,Histransactions]) 
+        const tempHistoryTransaction = [];
+        Histransactions.forEach(item => {
+            item.data.forEach(dt => {
+                tempHistoryTransaction.push({
+                    ...dt,
+                    idTransaction: item.id,
+                    date: item.date
+                })
+            })
+        });
+
+        // before
+        // [{
+        //     id: uuidv4(),
+        //     data: transactions,
+        //     date: moment().format("DD MMMM YY")
+        // }]
+        // after
+        // {
+        //     id: product.id,
+        //     img: product.img,
+        //     title: product.title,
+        //     price: product.price,
+        //     disc: product.disc,
+        //     qty: qty,
+        //     transactionDate: new Date().toLocaleString("id-ID"),
+        //     idTransaction: blablabla,
+        //     date: blablabla
+        // }
+        setProd(tempHistoryTransaction);
+    }, [params.data, Histransactions])
 
     useEffect(() => {
         let dates = "";
@@ -23,28 +51,28 @@ const History = () => {
         setDate(dates);
     }, [Histransactions]);
 
-    const transaction = (item,i) => {
+    const transaction = (item, i) => {
 
         const price = item.price;
-        const disc = (price * (item.disc/100));
+        const disc = (price * (item.disc / 100));
         const finalPrice = price - disc;
-        const total = finalPrice * item.qty;      
+        const total = finalPrice * item.qty;
 
-        return(
+        return (
             <div className="border border-b-2 rounded-lg bg-white p-5 mt-5 mb-5" key={i}>
                 <div className="pb-5">
-                    <label className="font-bold text-sm">Belanja</label> 
-                    <label className="text-sm pl-2">{date}</label>
+                    <label className="font-bold text-sm">Belanja</label>
+                    <label className="text-sm pl-2">{item.date}</label>
                     <FontAwesomeIcon className="pl-2 text-lg text-green-600" icon={faCircleCheck} />
                 </div>
                 <div className="flex">
                     <div className="rounded-lg w-24 h-20">
-                        <img src={item.img}/>
+                        <img src={item.img} />
                     </div>
                     <div className="w-full pl-5">
                         <div className="font-medium">
                             <label>{item.title}</label>
-                        </div>  
+                        </div>
                         <div className="text-sm flex justify-between">
                             <label>{item.qty} barang x {finalPrice}</label>
                             <div className="border-l-2 p-5 pt-3 pb-3">
@@ -58,7 +86,7 @@ const History = () => {
         )
     }
 
-    return(
+    return (
         <div className="mr-52 ml-52">
             <div className="mb-5">
                 <label className="font-medium text-2xl">Riwayat Pembelian</label>
